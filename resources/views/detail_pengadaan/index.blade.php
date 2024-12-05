@@ -3,58 +3,42 @@
 @section('page-subTitle', 'Daftar Pengadaan')
 @section('content')
 
-<div class="container-xxl flex-grow-1 container-p-y">
-    <div class="d-flex justify-content-between align-items-center py-3 mb-4">
-        <h4 class="fw-bold mb-0">Daftar Pengadaan</h4>
-        <a href="/pengadaan/create" class="btn btn-primary">Tambah Pengadaan</a>
-    </div>
-
-    <div class="row">
-        <div class="col-xl">
-            <div class="card">
-                <h5 class="card-header">Data Pengadaan</h5>
-                <div class="table-responsive text-nowrap">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Timestamp</th>
-                                <th>Status</th>
-                                <th>User</th>
-                                <th>Vendor</th>
-                                <th>Subtotal Nilai</th>
-                                <th>PPN</th>
-                                <th>Total Nilai</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pengadaan as $item)
-                                <tr>
-                                    <td>{{ $item->idpengadaan }}</td>
-                                    <td>{{ $item->timestamp }}</td>
-                                    <td>{{ $item->status }}</td>
-                                    <td>{{ $item->username }}</td>
-                                    <td>{{ $item->nama_vendor }}</td>
-                                    <td>{{ $item->subtotal_nilai }}</td>
-                                    <td>{{ $item->ppn }}</td>
-                                    <td>{{ $item->total_nilai }}</td>
-                                    <td>
-                                        <a href="/pengadaan/edit/{{ $item->idpengadaan }}" class="btn btn-icon btn-outline-warning">
-                                            <span class="tf-icons bx bx-edit-alt"></span>
-                                        </a>
-                                        <a href="/pengadaan/delete/{{ $item->idpengadaan }}" class="btn btn-icon btn-outline-danger" onclick="return confirm('Are you sure?')">
-                                            <span class="tf-icons bx bx-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="container">
+    <h1>Daftar Detail Pengadaan</h1>
+    <a href="{{ route('detail_pengadaan.create') }}" class="btn btn-primary">Tambah Detail Pengadaan</a>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            {{ $message }}
         </div>
-    </div>
+    @endif
+    <table class="table table-bordered">
+        <tr>
+            <th>No</th>
+            <th>Harga Satuan</th>
+            <th>Jumlah</th>
+            <th>Sub Total</th>
+            <th>ID Barang</th>
+            <th>ID Pengadaan</th>
+            <th>Aksi</th>
+        </tr>
+        @foreach ($detailPengadaans as $detailPengadaan)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $detailPengadaan->harga_satuan }}</td>
+            <td>{{ $detailPengadaan->jumlah }}</td>
+            <td>{{ $detailPengadaan->sub_total }}</td>
+            <td>{{ $detailPengadaan->idbarang }}</td>
+            <td>{{ $detailPengadaan->idpengadaan }}</td>
+            <td>
+                <a href="{{ route('detail_pengadaan.edit', $detailPengadaan->iddetail_pengadaan) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ route('detail_pengadaan.destroy', $detailPengadaan->iddetail_pengadaan) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </table>
 </div>
-
 @endsection

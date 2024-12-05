@@ -14,7 +14,8 @@ use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\DetailReturController;
 use App\Http\Controllers\DetailPenjualanController;
-use app\Http\Controllers\KartuStokController; 
+use App\Http\Controllers\DetailPenerimaanController;
+use app\Http\Controllers\KartuStokController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -68,19 +69,23 @@ Route::get('/margin-penjualan/edit/{id}', [MarginPenjualanController::class, 'ed
 Route::post('/margin-penjualan/update/{id}', [MarginPenjualanController::class, 'update']);
 Route::get('/margin-penjualan/delete/{id}', [MarginPenjualanController::class, 'delete']);
 
+
 // PENGADAAN
-Route::get('/pengadaan/index', [PengadaanController::class, 'index'])->name('pengadaan/index');
-Route::post('/pengadaan/simpan', [PengadaanController::class, 'save']);
-Route::get('/pengadaan/edit/{id}', [PengadaanController::class, 'edit']);
-Route::post('/pengadaan/update/{id}', [PengadaanController::class, 'update']);
-Route::get('/pengadaan/delete/{id}', [PengadaanController::class, 'delete']);
+Route::get('/pengadaan/index', [PengadaanController::class, 'index'])->name('pengadaan.index')-> name('pengadaan/index');
+Route::get('/pengadaan/simpan', [PengadaanController::class, 'simpan'])->name('pengadaan.simpan');
+Route::post('/pengadaan/delete', [PengadaanController::class, 'delete'])->name('pengadaan.delete');
+Route::get('/pengadaan/edit/{id}', [PengadaanController::class, 'edit'])->name('pengadaan.edit');
+Route::post('/pengadaan/update/{id}', [PengadaanController::class, 'update'])->name('pengadaan.update');
+Route::post('pengadaan/simpan', [PengadaanController::class, 'simpan'])->name('pengadaan.simpan');
+
 
 // DETAIL PENGADAAN
-Route::get('/detail-pengadaan/index', [DetailPengadaanController::class, 'index'])->name('detail-pengadaan/index');
-Route::post('/detail-pengadaan/simpan', [DetailPengadaanController::class, 'save']);
-Route::get('/detail-pengadaan/edit/{id}', [DetailPengadaanController::class, 'edit']);
-Route::post('/detail-pengadaan/update/{id}', [DetailPengadaanController::class, 'update']);
-Route::get('/detail-pengadaan/delete/{id}', [DetailPengadaanController::class, 'delete']);
+Route::get('/detail_pengadaan/index', [DetailPengadaanController::class, 'index'])->name('detail_pengadaan.index')->name('detail_pengadaan/index');
+Route::get('/detail_pengadaan/simpan', [DetailPengadaanController::class, 'save'])->name('detail_pengadaan.create');
+Route::post('/detail_pengadaan/edit', [DetailPengadaanController::class, 'edit'])->name('detail_pengadaan.store');
+Route::get('/detail_pengadaan/update/{id}', [DetailPengadaanController::class, 'update'])->name('detail_pengadaan.edit');
+Route::post('/detail_pengadaan/delete/{id}', [DetailPengadaanController::class, 'delete'])->name('detail_pengadaan.delete');
+
 
 
 // RETUR
@@ -97,10 +102,16 @@ Route::get('/penerimaan/edit/{id}', [PenerimaanController::class, 'edit']);
 Route::post('/penerimaan/update/{id}', [PenerimaanController::class, 'update']);
 Route::get('/penerimaan/delete/{id}', [PenerimaanController::class, 'delete']);
 
+// DETAIL PENERIMAAN
+Route::get('/detail_penerimaan/index', [DetailPenerimaanController::class, 'index'])->name('detail_penerimaan/index');
+Route::post('/detail_penerimaan/simpan', [DetailPenerimaanController::class, 'save']);
+Route::get('/detail_penerimaan/edit/{id}', [DetailPenerimaanController::class, 'edit']);
+Route::post('/detail_penerimaan/update/{id}', [DetailPenerimaanController::class, 'update']);
+Route::get('/detail_penerimaan/delete/{id}', [DetailPenerimaanController::class, 'delete']);
 
 // PENJUALAN
 Route::get('/penjualan/index', [PenjualanController::class, 'index'])->name('penjualan/index');
-Route::post('/penjualan/simpan', [PenjualanController::class, 'save']);
+Route::post('/penjualan/simpan', [PenjualanController::class, 'save'])->name('penjualan/simpan');
 Route::get('/penjualan/edit/{id}', [PenjualanController::class, 'edit']);
 Route::post('/penjualan/update/{id}', [PenjualanController::class, 'update']);
 Route::get('/penjualan/delete/{id}', [PenjualanController::class, 'delete']);
@@ -120,8 +131,11 @@ Route::post('/detail_penjualan/update/{id}', [DetailPenjualanController::class, 
 Route::get('/detail_penjualan/delete/{id}', [DetailPenjualanController::class, 'delete']);
 
 // KARTU STOK
-Route::get('/kartu_stok/index', [KartuStokController::class, 'index'])->name('kartu_stok/index');
-Route::get('/kartu_stok/show/{id}', [KartuStokController::class, 'show'])->name('kartu_stok/show');
+Route::get('/kartu_stok/index', [KartuStokController::class, 'index'])->name('kartu_stok.index');
+Route::get('/kartu_stok/show/{id}', [KartuStokController::class, 'show'])->name('kartu_stok.show');
+Route::post('/kartu_stok/simpan', [KartuStokController::class, 'save'])->name('kartu_stok.simpan');
+Route::get('/kartu_stok/delete/{id}', [KartuStokController::class, 'delete'])->name('kartu_stok.delete');
+
 
 //Data Tabel
 Route::get('/DataTabel', Function(){

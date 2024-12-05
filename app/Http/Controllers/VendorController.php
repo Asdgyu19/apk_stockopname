@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Providers\DatabaseConnectionProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -9,11 +10,11 @@ class VendorController extends Controller
 {
     public function index()
     {
-        // Mengambil data vendor dari database
+
         $vendor = DB::select('SELECT * FROM vendor');
 
-        // Menampilkan view 'index' dengan data vendor yang diambil
-        return view('vendor.index', ['vendor' => $vendor]);
+
+        return view('vendor.index', compact('vendor'));
     }
 
     public function save(Request $request)

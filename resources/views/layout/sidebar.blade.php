@@ -70,75 +70,87 @@
                         <div data-i18n="Pengadaan">Pengadaan</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Request::is('detail-pengadaan/index') | Request::is('detail-pengadaan/edit/*') ? 'active' : '' }}">
-                    <a href="{{ url('detail-pengadaan/index') }}" class="menu-link">
+                <li class="menu-item {{ Request::is('detail_pengadaan/index') | Request::is('detail_pengadaan/edit/*') ? 'active' : '' }}">
+                    <a href="{{ url('detail_pengadaan/index') }}" class="menu-link">
                         <div data-i18n="Detail Pengadaan">Detail Pengadaan</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
-            <a href="/menu" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cart"></i>
-                <div data-i18n="User interface">Penjualan</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Penjualan</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Detail Penjualan</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="/menu" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-task"></i>
-                <div data-i18n="Extended UI">Penerimaan</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Penerimaan</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Detail Penerimaan</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="icons-boxicons.html" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-sync"></i>
-                <div data-i18n="Boxicons">Retur</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Retur</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Detail Retur</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="icons-boxicons.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Boxicons">Kartu Stok</div>
-            </a>
-        </li>
-    </ul>
-</aside>
+
+        <div class="menu-inner-shadow"></div>
+        <ul class="menu-inner py-1">
+            <!-- Penjualan -->
+            <li class="menu-item {{ Request::is('penjualan*') ? 'active open' : '' }}">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-cart"></i>
+                    <div data-i18n="Penjualan">Penjualan</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Request::is('penjualan') ? 'active' : '' }}">
+                        <a href="{{ url('penjualan/index') }}" class="menu-link">
+                            <div data-i18n="Penjualan">Penjualan</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('detail_penjualan/index') | Request::is('detail-penjualan/edit/*') ? 'active' : '' }}">
+                        <a href="{{ url('detail_penjualan/index') }}" class="menu-link">
+                            <div data-i18n="Detail Penjualan">Detail Penjualan</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Penerimaan -->
+            <li class="menu-item {{ Request::is('penerimaan*') ? 'active open' : '' }}">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-task"></i>
+                    <div data-i18n="Penerimaan">Penerimaan</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Request::is('penerimaan') ? 'active' : '' }}">
+                        <a href="{{ url('penerimaan/index') }}" class="menu-link">
+                            <div data-i18n="Penerimaan">Penerimaan</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('detail_penerimaan/index') | Request::is('detail_penerimaan/edit/*') ? 'active' : '' }}">
+                        <a href="{{ url('detail_penerimaan/index') }}" class="menu-link">
+                            <div data-i18n="Detail Penerimaan">Detail Penerimaan</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Retur -->
+            <li class="menu-item {{ Request::is('retur*') ? 'active open' : '' }}">
+                <a href="#" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-sync"></i>
+                    <div data-i18n="Retur">Retur</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ Request::is('retur') ? 'active' : '' }}">
+                        <a href="{{ url('retur/index') }}" class="menu-link">
+                            <div data-i18n="Retur">Retur</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('detail_retur/index') | Request::is('detail_retur/edit/*') ? 'active' : '' }}">
+                        <a href="{{ url('detail_retur/index') }}" class="menu-link">
+                            <div data-i18n="Detail Retur">Detail Retur</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Kartu Stok -->
+            <li class="menu-item {{ Request::is('kartu_stok/index') || Request::is('kartu_stok/edit/*') ? 'active' : '' }}">
+                <a href="{{ route('kartu_stok.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Kartu Stok">Kartu Stok</div>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

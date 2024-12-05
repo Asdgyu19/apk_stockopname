@@ -7,90 +7,71 @@ use Illuminate\Support\Facades\DB;  // Pastikan DB facade sudah di-import
 
 class DetailPengadaanController extends Controller
 {
-    // Menampilkan daftar detail pengadaan
     public function index()
     {
-        // Mengambil semua data dari tabel detail_pengadaan menggunakan raw SQL
-        $detailPengadaan = DB::select('SELECT * FROM detail_pengadaan');
-
-        // Mengirim data ke view
-        return view('detail_pengadaan.index', compact('detailPengadaan'));
+        $detailPengadaans = DB::table('detail_pengadaan')->get();
+        return view('detail_pengadaan.index', compact('detailPengadaans'));
     }
 
-    // Menambahkan detail pengadaan baru
+    public function create()
+    {
+        return view('detail_pengadaan.create');
+    }
+
     public function store(Request $request)
     {
-        // Validasi input data
         $request->validate([
-            'id_pengadaan' => 'required|integer',
-            'nama_barang' => 'required|string|max:255',
-            'jumlah' => 'required|integer',
-            'harga' => 'required|numeric',
-            'subtotal' => 'required|numeric',
+            'harga_satuan' => 'required',
+            'jumlah' => 'required',
+            'sub_total' => 'required',
+            'idbarang' => 'required',
+            'idpengadaan' => 'required',
         ]);
 
-        // Menyimpan data ke tabel detail_pengadaan menggunakan raw SQL
-        DB::insert('INSERT INTO detail_pengadaan (id_pengadaan, nama_barang, jumlah, harga, subtotal)
-                    VALUES (?, ?, ?, ?, ?)', [
-                        $request->id_pengadaan,
-                        $request->nama_barang,
-                        $request->jumlah,
-                        $request->harga,
-                        $request->subtotal
-                    ]);
+        DB::table('detail_pengadaan')->insert([
+            'harga_satuan' => $request->harga_satuan,
+            'jumlah' => $request->jumlah,
+            'sub_total' => $request->sub_total,
+            'idbarang' => $request->idbarang,
+            'idpengadaan' => $request->idpengadaan,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
-        // Redirect ke halaman index setelah data berhasil disimpan
-        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail pengadaan berhasil ditambahkan!');
+        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail Pengadaan berhasil ditambahkan.');
     }
 
-    // Menampilkan form untuk mengedit detail pengadaan
     public function edit($id)
     {
-        // Mengambil data detail pengadaan berdasarkan ID menggunakan raw SQL
-        $detailPengadaan = DB::select('SELECT * FROM detail_pengadaan WHERE id = ?', [$id]);
-
-        // Jika data tidak ditemukan, redirect ke index dengan pesan error
-        if (empty($detailPengadaan)) {
-            return redirect()->route('detail_pengadaan.index')->with('error', 'Detail pengadaan tidak ditemukan.');
-        }
-
-        // Mengirim data detail pengadaan ke view
+        $detailPengadaan = DB::table('detail_pengadaan')->where('iddetail_pengadaan', $id)->first();
         return view('detail_pengadaan.edit', compact('detailPengadaan'));
     }
 
-    // Memperbarui data detail pengadaan
     public function update(Request $request, $id)
     {
-        // Validasi input data
         $request->validate([
-            'id_pengadaan' => 'required|integer',
-            'nama_barang' => 'required|string|max:255',
-            'jumlah' => 'required|integer',
-            'harga' => 'required|numeric',
-            'subtotal' => 'required|numeric',
+            'harga_satuan' => 'required',
+            'jumlah' => 'required',
+            'sub_total' => 'required',
+            'idbarang' => 'required',
+            'idpengadaan' => 'required',
         ]);
 
-        // Memperbarui data detail pengadaan berdasarkan ID menggunakan raw SQL
-        DB::update('UPDATE detail_pengadaan SET id_pengadaan = ?, nama_barang = ?, jumlah = ?, harga = ?, subtotal = ? WHERE id = ?', [
-            $request->id_pengadaan,
-            $request->nama_barang,
-            $request->jumlah,
-            $request->harga,
-            $request->subtotal,
-            $id
+        DB::table('detail_pengadaan')->where('iddetail_pengadaan', $id)->update([
+            'harga_satuan' => $request->harga_satuan,
+            'jumlah' => $request->jumlah,
+            'sub_total' => $request->sub_total,
+            'idbarang' => $request->idbarang,
+            'idpengadaan' => $request->idpengadaan,
+            'updated_at' => now()
         ]);
 
-        // Redirect ke halaman index setelah data berhasil diperbarui
-        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail pengadaan berhasil diperbarui!');
+        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail Pengadaan berhasil diupdate.');
     }
 
-    // Menghapus data detail pengadaan
     public function destroy($id)
     {
-        // Menghapus data detail pengadaan berdasarkan ID menggunakan raw SQL
-        DB::delete('DELETE FROM detail_pengadaan WHERE id = ?', [$id]);
-
-        // Redirect ke halaman index setelah data berhasil dihapus
-        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail pengadaan berhasil dihapus!');
+        DB::table('detail_pengadaan')->where('iddetail_pengadaan', $id)->delete();
+        return redirect()->route('detail_pengadaan.index')->with('success', 'Detail Pengadaan berhasil dihapus.');
     }
 }
